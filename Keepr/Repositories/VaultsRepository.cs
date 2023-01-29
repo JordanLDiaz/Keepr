@@ -23,7 +23,6 @@ public class VaultsRepository
     return vaultData;
   }
 
-
   internal Vault GetVaultById(int vaultId)
   {
     string sql = @"

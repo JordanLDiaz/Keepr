@@ -15,12 +15,16 @@ public class VaultsService
     return vault;
   }
 
-  internal Vault GetVaultById(int vaultId, string id)
+  internal Vault GetVaultById(int vaultId, string accountId)
   {
     Vault vault = _repo.GetVaultById(vaultId);
     if (vault == null)
     {
       throw new Exception("No vault at this id.");
+    }
+    if (vault.IsPrivate == true && vault.CreatorId != accountId)
+    {
+      throw new Exception("This is a private vault that you don't have access to.");
     }
     return vault;
   }
@@ -52,3 +56,4 @@ public class VaultsService
     return message;
   }
 }
+
