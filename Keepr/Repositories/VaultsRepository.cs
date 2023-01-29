@@ -64,4 +64,22 @@ public class VaultsRepository
     _db.Execute(sql, new { id });
     return "Vault was deleted.";
   }
+
+  internal List<Vault> GetMyVaults(string id)
+  {
+    string sql = @"
+    SELECT
+    vaults.*,
+    accounts.*
+    FROM vaults
+    JOIN accounts ON accounts.id = vaults.creatorId
+    WHERE vaults.creatorId = @id;
+    ";
+    return _db.Query<Vault, Account, Vault>(sql, (vault, account) =>
+    {
+      vault.Creator = account;
+      return vault;
+    }, new { id }).ToList();
+  }
+
 }

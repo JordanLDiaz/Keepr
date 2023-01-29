@@ -15,7 +15,6 @@ public class VaultsService
     return vault;
   }
 
-  // NOTE No-auth GetVaultById private test has weird errors... something here?
   internal Vault GetVaultById(int vaultId, string userId)
   {
     Vault vault = _repo.GetVaultById(vaultId);
