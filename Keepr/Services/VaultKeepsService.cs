@@ -13,9 +13,13 @@ public class VaultKeepsService
     _keepsService = keepsService;
   }
 
-  internal VaultKeep CreateVaultKeep(VaultKeep vaultKeepData)
+  internal VaultKeep CreateVaultKeep(VaultKeep vaultKeepData, string userId)
   {
     VaultKeep vaultKeep = _vkRepo.CreateVaultKeep(vaultKeepData);
+    if (vaultKeep.CreatorId != userId)
+    {
+      throw new Exception("You do not have permission to create a vault keep.");
+    }
     return vaultKeep;
   }
 

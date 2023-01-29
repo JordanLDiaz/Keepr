@@ -15,14 +15,15 @@ public class VaultsService
     return vault;
   }
 
-  internal Vault GetVaultById(int vaultId, string accountId)
+  // NOTE No-auth GetVaultById private test has weird errors... something here?
+  internal Vault GetVaultById(int vaultId, string userId)
   {
     Vault vault = _repo.GetVaultById(vaultId);
     if (vault == null)
     {
       throw new Exception("No vault at this id.");
     }
-    if (vault.IsPrivate == true && vault.CreatorId != accountId)
+    if (vault.IsPrivate == true && vault.CreatorId != userId)
     {
       throw new Exception("This is a private vault that you don't have access to.");
     }
