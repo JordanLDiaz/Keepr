@@ -9,7 +9,7 @@ public class KeepsRepository
     _db = db;
   }
 
-  internal Keep Create(Keep keepData)
+  public Keep Create(Keep keepData)
   {
     string sql = @"
     INSERT INTO keeps
@@ -23,7 +23,7 @@ public class KeepsRepository
     return keepData;
   }
 
-  internal List<Keep> GetAll()
+  public List<Keep> GetAll()
   {
     string sql = @"
     SELECT
@@ -43,7 +43,7 @@ public class KeepsRepository
     return keeps;
   }
 
-  internal Keep GetOne(int id)
+  public Keep GetOne(int id)
   {
     string sql = @"
     SELECT 
@@ -63,7 +63,7 @@ public class KeepsRepository
     return keep;
   }
 
-  internal bool EditKeep(Keep original)
+  public bool EditKeep(Keep original)
   {
     string sql = @"
     UPDATE keeps
@@ -78,13 +78,13 @@ public class KeepsRepository
     return rows > 0;
   }
 
-  internal void Remove(int id)
+  public bool Remove(int id)
   {
     string sql = @"
     DELETE FROM keeps
     WHERE id = @id;
     ";
-    _db.Execute(sql, new { id });
-
+    int rows = _db.Execute(sql, new { id });
+    return rows > 0;
   }
 }

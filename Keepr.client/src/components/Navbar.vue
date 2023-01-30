@@ -1,10 +1,31 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light px-3">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
-      <div class="d-flex flex-column">
-        <img alt="logo" src="../assets/img/keepr logo.png" height="45" />
-      </div>
+      <button class="rounded-pill m-2 p-2" title="Home">Home</button>
     </router-link>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown"
+      aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+            title="Create New Keep or Vault">
+            Create
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark">
+            <li><a class="dropdown-item" href="#">Create Keep</a></li>
+            <li><a class="dropdown-item" href="#">Create Vault</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
+      <img alt="logo" src="../assets/img/keepr logo.png" height="45" title="Home" />
+    </router-link>
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
       aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>

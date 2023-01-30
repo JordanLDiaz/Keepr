@@ -1,8 +1,14 @@
 <template>
-  <div class="card my-2 elevation-5">
-    <img
-      src="https://images.unsplash.com/photo-1675002713677-98516abcb92c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzM3x8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60"
-      class="rounded">
+  <div @click="setActiveKeep(keep)" class="selectable" data-bs-toggle="modal" data-bs-target="#keepDetailsModal">
+    <div class="card my-3 elevation-5">
+      <img :src="keep.img" class="rounded">
+      <div class="row">
+        <h4>{{ keep.name }}</h4>
+        <div class="col-2">
+          <img :src="keep.creator.picture" alt="keep.creator.name" class="img-fluid rounded-circle m-1">
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -10,6 +16,9 @@
 <script>
 import { AppState } from '../AppState';
 import { computed, reactive, onMounted } from 'vue';
+import { keepsService } from "../services/KeepsService.js";
+import { logger } from "../utils/Logger.js";
+import Pop from "../utils/Pop.js";
 
 export default {
   props: {
@@ -20,7 +29,15 @@ export default {
 
   setup(props) {
     return {
-
+      async setActiveKeep(keep) {
+        try {
+          AppState.activeKeep = keep
+          await keepsService.getOne(keep.id)
+        } catch (error) {
+          logger.error(error)
+          Pop.error(error.message)
+        }
+      }
     }
   }
 };
