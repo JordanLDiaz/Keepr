@@ -29,6 +29,7 @@ public class VaultKeepsRepository
     string sql = @"
     SELECT 
     vaultKeeps.*,
+    COUNT(vaultKeeps.id) AS Kept,
     vaultKeeps.id AS vaultKeepId,
     vaultKeeps.CreatorId AS VaultKeepCreatorId,
     keeps.*,
@@ -39,10 +40,10 @@ public class VaultKeepsRepository
     WHERE vaultKeeps.vaultId = @vaultId
     GROUP BY vaultKeeps.id;
     ";
-    return _db.Query<KeptKeep, Profile, KeptKeep>(sql, (keptKeep, profile) =>
+    return _db.Query<KeptKeep, Profile, KeptKeep>(sql, (keep, profile) =>
     {
-      keptKeep.Creator = profile;
-      return keptKeep;
+      keep.Creator = profile;
+      return keep;
     }, new { vaultId }).ToList();
   }
 

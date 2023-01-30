@@ -5,21 +5,32 @@ public class VaultKeepsService
   private readonly VaultKeepsRepository _vkRepo;
   private readonly VaultsService _vaultsService;
   private readonly KeepsService _keepsService;
+  private readonly VaultsRepository _vaultsRepo;
+  private readonly KeepsRepository _repo;
 
-  public VaultKeepsService(VaultKeepsRepository vkRepo, VaultsService vaultsService, KeepsService keepsService)
+  public VaultKeepsService(VaultKeepsRepository vkRepo, VaultsService vaultsService, KeepsService keepsService, VaultsRepository vaultsRepository, KeepsRepository keepsRepository)
   {
     _vkRepo = vkRepo;
     _vaultsService = vaultsService;
     _keepsService = keepsService;
+    _vaultsRepo = vaultsRepository;
+    _repo = keepsRepository;
   }
 
-  internal VaultKeep CreateVaultKeep(VaultKeep vaultKeepData, string userId)
+  internal VaultKeep CreateVaultKeep(VaultKeep vaultKeepData)
   {
-    VaultKeep vaultKeep = _vkRepo.CreateVaultKeep(vaultKeepData);
-    if (vaultKeep.CreatorId != userId)
+    Vault vault = _vaultsRepo.GetVaultById(vaultKeepData.VaultId);
+    Keep keep = _repo.GetOne(vaultKeepData.KeepId);
+    keep.Kept++;
+    if (vault == null)
     {
-      throw new Exception("You do not have permission to create a vault keep.");
+      throw new Exception("No vault at this id.");
     }
+    if (vault.CreatorId != vaultKeepData.CreatorId)
+    {
+      throw new Exception("You do not have permission to add a keep to this vault.");
+    }
+    VaultKeep vaultKeep = _vkRepo.CreateVaultKeep(vaultKeepData);
     return vaultKeep;
   }
 
@@ -45,7 +56,7 @@ public class VaultKeepsService
     VaultKeep vaultKeep = GetOneVaultKeepById(vaultKeepId);
     if (vaultKeep.CreatorId != userId)
     {
-      throw new Exception("You do not have permission to remove the keep from this vault.");
+      throw new Exception("You do not have permission to remove a keep from someone elses vault.");
     }
     string message = _vkRepo.RemoveVaultKeep(vaultKeepId);
     return message;

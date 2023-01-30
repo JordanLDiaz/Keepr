@@ -55,14 +55,13 @@ public class VaultsRepository
     return rows > 0;
   }
 
-  internal string RemoveVault(int id)
+  internal void RemoveVault(int id)
   {
     string sql = @"
     DELETE FROM vaults
     WHERE id = @id;
     ";
     _db.Execute(sql, new { id });
-    return "Vault was deleted.";
   }
 
   internal List<Vault> GetMyVaults(string id)

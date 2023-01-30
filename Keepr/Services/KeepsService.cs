@@ -15,9 +15,9 @@ public class KeepsService
     return keep;
   }
 
-  internal List<Keep> Get()
+  internal List<Keep> GetAll()
   {
-    List<Keep> keeps = _repo.Get();
+    List<Keep> keeps = _repo.GetAll();
     return keeps;
   }
 
@@ -28,12 +28,18 @@ public class KeepsService
     {
       throw new Exception("No keep at this id.");
     }
+
+    if (keep.CreatorId != userId)
+    {
+      keep.Views++;
+      _repo.EditKeep(keep);
+    }
     return keep;
   }
 
   internal Keep EditKeep(Keep updateData, int id, string userId)
   {
-    Keep original = GetOne(id, userId);
+    Keep original = GetOne(updateData.Id, userId);
     if (original.CreatorId != userId)
     {
       throw new Exception("This is not your keep to edit.");
@@ -49,11 +55,15 @@ public class KeepsService
   internal string Remove(int id, string userId)
   {
     Keep keep = GetOne(id, userId);
+    if (keep == null)
+    {
+      throw new Exception("No keep exists at this id.");
+    }
     if (keep.CreatorId != userId)
     {
       throw new Exception("You do not have permission to delete this keep.");
     }
-    string message = _repo.Remove(id);
-    return message;
+    _repo.Remove(id);
+    return $"{keep.Name} was removed.";
   }
 }

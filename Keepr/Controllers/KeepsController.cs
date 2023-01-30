@@ -32,11 +32,11 @@ public class KeepsController : ControllerBase
   }
 
   [HttpGet]
-  public ActionResult<List<Keep>> Get()
+  public ActionResult<List<Keep>> GetAll()
   {
     try
     {
-      List<Keep> keeps = _keepsService.Get();
+      List<Keep> keeps = _keepsService.GetAll();
       return Ok(keeps);
     }
     catch (Exception e)
@@ -68,6 +68,7 @@ public class KeepsController : ControllerBase
     {
       Account userInfo = await _auth0provider.GetUserInfoAsync<Account>(HttpContext);
       updateData.CreatorId = userInfo.Id;
+      updateData.Id = id;
       Keep editedKeep = _keepsService.EditKeep(updateData, id, userInfo.Id);
       return Ok(editedKeep);
     }

@@ -2,22 +2,22 @@ namespace Keepr.Services;
 
 public class VaultsService
 {
-  private readonly VaultsRepository _repo;
+  private readonly VaultsRepository _vaultsRepo;
 
-  public VaultsService(VaultsRepository repo)
+  public VaultsService(VaultsRepository vaultsRepo)
   {
-    _repo = repo;
+    _vaultsRepo = vaultsRepo;
   }
 
   internal Vault CreateVault(Vault vaultData)
   {
-    Vault vault = _repo.CreateVault(vaultData);
+    Vault vault = _vaultsRepo.CreateVault(vaultData);
     return vault;
   }
 
   internal Vault GetVaultById(int vaultId, string userId)
   {
-    Vault vault = _repo.GetVaultById(vaultId);
+    Vault vault = _vaultsRepo.GetVaultById(vaultId);
     if (vault == null)
     {
       throw new Exception("No vault at this id.");
@@ -41,7 +41,7 @@ public class VaultsService
     original.Img = updateData.Img ?? original.Img;
     original.IsPrivate = updateData.IsPrivate;
 
-    _repo.EditVault(original);
+    _vaultsRepo.EditVault(original);
     return original;
   }
 
@@ -52,8 +52,8 @@ public class VaultsService
     {
       throw new Exception("You do not have permission to delete this vault.");
     }
-    string message = _repo.RemoveVault(vaultId);
-    return message;
+    _vaultsRepo.RemoveVault(vaultId);
+    return $"{vault.Name} was removed.";
   }
 }
 
