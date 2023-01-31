@@ -15,8 +15,14 @@
             Create
           </a>
           <ul class="dropdown-menu dropdown-menu-dark">
-            <li><a class="dropdown-item" href="#">Create Keep</a></li>
-            <li><a class="dropdown-item" href="#">Create Vault</a></li>
+            <div class="selectable" data-bs-toggle="modal" data-bs-target="#NewKeepForm">
+              <li><a class="dropdown-item" href="#">Create Keep</a></li>
+            </div>
+
+            <!-- TODO add createVault to below -->
+            <div class="selectable" data-bs-toggle="modal" data-bs-target="#NewVaultForm">
+              <li><a class="dropdown-item" href="#">Create Vault</a></li>
+            </div>
           </ul>
         </li>
       </ul>
@@ -37,6 +43,14 @@
       <Login />
     </div>
   </nav>
+
+  <ModalComponent id="NewKeepForm">
+    <NewKeepForm />
+  </ModalComponent>
+
+  <ModalComponent id="NewVaultForm">
+    <NewVaultForm />
+  </ModalComponent>
 </template>
 
 <script>
