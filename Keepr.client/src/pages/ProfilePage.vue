@@ -30,15 +30,15 @@
   </div>
 </template>
 
+
 <script>
-import { computed, onMounted } from 'vue'
-import { AppState } from '../AppState'
-import { keepsService } from "../services/KeepsService.js"
-import { logger } from "../utils/Logger.js"
-import Pop from "../utils/Pop.js"
+import { AppState } from '../AppState';
+import { computed, reactive, onMounted } from 'vue';
+import { keepsService } from "../services/KeepsService.js";
+import { logger } from "../utils/Logger.js";
+import Pop from "../utils/Pop.js";
 export default {
   setup() {
-    // NOTE change to get my keeps... look @allspice, homepage to filter out not my keeps. do same on prof page. should look similar for vaults when i get there?
     async function getAllKeeps() {
       try {
         await keepsService.getAllKeeps();
@@ -47,17 +47,18 @@ export default {
         Pop.error(error.message)
       }
     }
-    onMounted(() => getAllKeeps());
+    onMounted(() => getAllKeeps())
     return {
       account: computed(() => AppState.account),
       vaults: computed(() => AppState.vaults),
       keeps: computed(() => AppState.keeps)
     }
   }
-}
+};
 </script>
 
-<style scoped>
+
+<style lang="scss" scoped>
 .cover-img {
   max-height: 40vh;
 }

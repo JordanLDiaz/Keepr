@@ -5,9 +5,7 @@
   <main>
     <router-view />
   </main>
-  <footer class="bg-light text-dark">
-    Made with 💖 by Jordan
-  </footer>
+
   <ModalComponent id="keepDetailsModal">
     <KeepDetailsModal />
   </ModalComponent>
