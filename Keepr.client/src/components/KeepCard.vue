@@ -5,7 +5,7 @@
       <div class="card-img-overlay d-flex align-items-end justify-content-between pb-1">
         <h4 class="text-white text-shadow text-lowercase" :title="keep.name" :aria-label="keep.name">{{ keep.name }}
         </h4>
-        <router-link :to="{ name: 'Profile' }">
+        <router-link :to="{ name: 'Profile', params: { profileId: keep.creatorId } }">
           <img :src="keep.creator.picture" :alt="keep.creator.name" class="img-fluid rounded-circle m-1 elevation-3"
             height="50" width="50" :title="keep.creator.name" :aria-label="keep.creator.name">
         </router-link>
@@ -24,9 +24,7 @@ import Pop from "../utils/Pop.js";
 
 export default {
   props: {
-    keep: {
-      type: Object, required: true
-    }
+    keep: { type: Object, required: true },
   },
 
   setup(props) {

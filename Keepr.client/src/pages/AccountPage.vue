@@ -38,20 +38,23 @@ import { logger } from "../utils/Logger.js"
 import Pop from "../utils/Pop.js"
 export default {
   setup() {
-    // NOTE change to get my keeps... look @allspice, homepage to filter out not my keeps. do same on prof page. should look similar for vaults when i get there?
-    async function getAllKeeps() {
+
+    async function getKeeps() {
       try {
-        await keepsService.getAllKeeps();
+        await keepsService.getKeeps();
       } catch (error) {
         logger.error(error)
         Pop.error(error.message)
       }
     }
-    onMounted(() => getAllKeeps());
+    onMounted(() => getKeeps());
     return {
       account: computed(() => AppState.account),
       vaults: computed(() => AppState.vaults),
-      keeps: computed(() => AppState.keeps)
+      keeps: computed(() => AppState.keeps),
+      getKeeps
+
+
     }
   }
 }

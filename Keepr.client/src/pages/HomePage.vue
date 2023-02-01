@@ -17,19 +17,19 @@ import { keepsService } from "../services/KeepsService.js";
 
 export default {
   setup() {
-    async function getAllKeeps() {
+    async function getKeeps() {
       try {
-        await keepsService.getAllKeeps();
+        await keepsService.getKeeps();
       } catch (error) {
         logger.error(error)
         Pop.error(error.message)
       }
     }
-    onMounted(() => getAllKeeps());
+    onMounted(() => getKeeps());
     return {
       keeps: computed(() => AppState.keeps),
       account: computed(() => AppState.account),
-      getAllKeeps,
+      getKeeps,
     }
   }
 }

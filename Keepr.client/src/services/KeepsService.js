@@ -3,9 +3,9 @@ import { api } from "./AxiosService.js";
 import { AppState } from "../AppState.js";
 
 class KeepsService {
-  async getAllKeeps() {
+  async getKeeps() {
     const res = await api.get('api/keeps')
-    logger.log('[GETTING ALL KEEPS]', res.data)
+    logger.log('[GETTING KEEPS]', res.data)
     AppState.keeps = res.data
   }
 

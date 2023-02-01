@@ -31,8 +31,8 @@
                 <h5 class="">Vault Dropdown</h5>
                 <button type="button" class="btn btn-secondary rounded-pill">Save</button>
               </div>
-              <div class="col-5 d-flex flex-row">
-                <router-link :to="{ name: 'Profile' }">
+              <div class="col-5 d-flex flex-row" v-if="activeKeep">
+                <router-link :to="{ name: 'Profile', params: { profileId: activeKeep?.creatorId } }">
                   <img @click.stop :src="activeKeep?.creator.picture" alt="" class="img-fluid rounded-circle m-1"
                     height="50" width="50">
                 </router-link>
@@ -50,12 +50,14 @@
 <script>
 import { AppState } from '../AppState';
 import { computed, reactive, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
 export default {
   setup() {
+    const route = useRoute();
     return {
       activeKeep: computed(() => AppState.activeKeep),
       account: computed(() => AppState.account),
-      // keep: computed(() => AppState.activeKeep)
+      keep: computed(() => AppState.activeKeep),
     }
   }
 };

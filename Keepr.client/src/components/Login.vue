@@ -19,7 +19,7 @@
                 Manage Account
               </div>
             </router-link>
-            <router-link :to="{ name: 'Profile' }">
+            <router-link :to="{ name: 'Profile', params: { profileId: account.id } }" v-if="account.id">
               <div class="list-group-item dropdown-item list-group-item-action">
                 My Profile
               </div>

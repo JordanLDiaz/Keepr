@@ -7,17 +7,14 @@
       <img class="rounded-circle prof-pic" :src="account.picture" alt="" />
     </div>
     <h1> {{ account.name }}</h1>
-    <div><span>{{ vaults.length }}</span> Vaults | <span>{{ keeps.length }}</span> Keeps</div>
+    <div><span> {{ vaults.length }} </span> Vaults | <span> {{ keeps.length }} </span> Keeps</div>
   </div>
 
   <div class="container">
-
     <div class="row">
       <h2>Vaults</h2>
       <div class="col-3">
-        <img
-          src="https://images.unsplash.com/photo-1454991727061-be514eae86f7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fHNlYSUyMGNyZWF0dXJlc3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-          class="vault-cover rounded">
+        <VaultCard />
       </div>
     </div>
 
@@ -37,21 +34,54 @@ import { computed, reactive, onMounted } from 'vue';
 import { keepsService } from "../services/KeepsService.js";
 import { logger } from "../utils/Logger.js";
 import Pop from "../utils/Pop.js";
+import { vaultsService } from "../services/VaultsService.js";
+import { profilesService } from "../services/ProfilesService.js";
+import { useRoute } from 'vue-router';
+
 export default {
   setup() {
-    async function getAllKeeps() {
+    const route = useRoute();
+    async function getUserProfile() {
       try {
-        await keepsService.getAllKeeps();
+        await profilesService.getUserProfile(route.params.profileId);
       } catch (error) {
         logger.error(error)
         Pop.error(error.message)
       }
     }
-    onMounted(() => getAllKeeps())
+
+    async function getUserKeeps() {
+      try {
+        await profilesService.getUserKeeps(route.params.profileId);
+      } catch (error) {
+        logger.error(error)
+        Pop.error(error.message)
+      }
+    }
+
+    async function getUserVaults() {
+      try {
+        await profilesService.getUserVaults(route.params.profileId);
+      } catch (error) {
+        logger.error(error)
+        Pop.error(error.message)
+      }
+    }
+
+    onMounted(() => {
+      getUserProfile()
+      getUserKeeps()
+      getUserVaults()
+    }
+    )
     return {
       account: computed(() => AppState.account),
-      vaults: computed(() => AppState.vaults),
-      keeps: computed(() => AppState.keeps)
+      profile: computed(() => AppState.activeProfile),
+      keeps: computed(() => AppState.userKeeps),
+      vaults: computed(() => AppState.userVaults),
+      getUserProfile,
+      getUserKeeps,
+      getUserVaults
     }
   }
 };
