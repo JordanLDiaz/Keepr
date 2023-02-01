@@ -1,20 +1,20 @@
 <template>
   <div class="row text-center">
     <div>
-      <img class="mt-4 rounded cover-img" :src="account.coverImg" alt="">
+      <img class="mt-4 rounded cover-img" :src="profile?.coverImg" alt="">
     </div>
     <div>
-      <img class="rounded-circle prof-pic" :src="account.picture" alt="" />
+      <img class="rounded-circle prof-pic" :src="profile?.picture" alt="" />
     </div>
-    <h1> {{ account.name }}</h1>
+    <h3> {{ profile?.name }}</h3>
     <div><span> {{ vaults.length }} </span> Vaults | <span> {{ keeps.length }} </span> Keeps</div>
   </div>
 
   <div class="container">
     <div class="row">
       <h2>Vaults</h2>
-      <div class="col-3">
-        <VaultCard />
+      <div class="col-3" v-for="v in vaults">
+        <VaultCard :vault="v" />
       </div>
     </div>
 
@@ -31,10 +31,8 @@
 <script>
 import { AppState } from '../AppState';
 import { computed, reactive, onMounted } from 'vue';
-import { keepsService } from "../services/KeepsService.js";
 import { logger } from "../utils/Logger.js";
 import Pop from "../utils/Pop.js";
-import { vaultsService } from "../services/VaultsService.js";
 import { profilesService } from "../services/ProfilesService.js";
 import { useRoute } from 'vue-router';
 
@@ -90,11 +88,7 @@ export default {
 
 <style lang="scss" scoped>
 .cover-img {
-  max-height: 40vh;
-}
-
-.vault-cover {
-  max-width: 40vh;
+  min-width: 70vh;
   max-height: 40vh;
   background-position: center;
   background-size: cover;

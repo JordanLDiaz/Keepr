@@ -9,6 +9,12 @@ export class VaultsService {
     logger.log('[CREATING VAULT]', res.data)
     AppState.activeVault = res.data
   }
+
+  async getVault(vaultId) {
+    const res = await api.get('api/vaults/' + vaultId)
+    logger.log('[GETTING VAULT BY ID]', res.data)
+    AppState.activeVault = res.data
+  }
 }
 
 export const vaultsService = new VaultsService();

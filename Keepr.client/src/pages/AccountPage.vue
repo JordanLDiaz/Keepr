@@ -54,7 +54,6 @@ export default {
       keeps: computed(() => AppState.keeps),
       getKeeps
 
-
     }
   }
 }
@@ -62,11 +61,7 @@ export default {
 
 <style scoped>
 .cover-img {
-  max-height: 40vh;
-}
-
-.vault-cover {
-  max-width: 40vh;
+  min-width: 70vh;
   max-height: 40vh;
   background-position: center;
   background-size: cover;
