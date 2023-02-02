@@ -50,9 +50,9 @@
       </div>
     </div>
 
-    <div class="row">
-      <h2>Keeps</h2>
-      <div class="col-3" v-for="k in myKeeps">
+    <h2>Keeps</h2>
+    <div class="masonry-with-columns">
+      <div class="" v-for="k in myKeeps">
         <KeepCard :keep="k" />
       </div>
     </div>
@@ -122,7 +122,7 @@ export default {
       getMyKeeps,
       editable,
 
-      // FIXME edit account not going through...
+      // FIXME edit account not going through...now it is but still weird
       async editAccount() {
         try {
           await accountService.editAccount(editable.value);
@@ -139,7 +139,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .cover-img {
   min-width: 70vh;
   max-height: 40vh;
@@ -154,5 +154,16 @@ export default {
 
 .text-shadow {
   text-shadow: 2px 2px 4px #777676;
+}
+
+.masonry-with-columns {
+  columns: 4 200px;
+  column-gap: 1rem;
+
+  div {
+    width: 100px;
+    display: inline-block;
+    width: 100%;
+  }
 }
 </style>

@@ -1,5 +1,4 @@
 <template>
-  <!-- TODO get vault stuff to draw to page... won't for some reason! -->
   <div class="container">
     <div class="row text-center justify-content-center">
       <div class="col-6 my-2">
@@ -19,6 +18,8 @@
       </div>
     </div>
 
+
+    <!-- TODO add delete button on keep card for keep vaults -->
     <div class="row text-center mt">
       <h1>Vault Keeps</h1>
       <div class="col-3" v-for="k in vaultKeeps">

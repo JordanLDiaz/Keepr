@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <div class="row">
-      <div class="col-3" v-for="k in keeps">
+    <div class="masonry-with-columns">
+      <div class="" v-for="k in keeps">
         <KeepCard :keep="k" />
       </div>
     </div>
@@ -36,5 +36,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.masonry-with-columns {
+  columns: 4 200px;
+  column-gap: 1.5rem;
 
+  div {
+    width: 100px;
+    display: inline-block;
+    width: 100%;
+  }
+}
 </style>

@@ -18,9 +18,9 @@
       </div>
     </div>
 
-    <div class="row">
-      <h2>Keeps</h2>
-      <div class="col-3" v-for="k in keeps">
+    <h2>Keeps</h2>
+    <div class="masonry-with-columns">
+      <div class="" v-for="k in keeps">
         <KeepCard :keep="k" />
       </div>
     </div>
@@ -96,5 +96,16 @@ export default {
 .prof-pic {
   max-width: 80px;
   justify-content: center;
+}
+
+.masonry-with-columns {
+  columns: 4 200px;
+  column-gap: 1rem;
+
+  div {
+    width: 100px;
+    display: inline-block;
+    width: 100%;
+  }
 }
 </style>

@@ -26,9 +26,9 @@
               }}</p>
             </div>
 
-            <!-- FIXME almost there! drop down closes immediately and sometimes doesn't show list at all wth... :(  -->
-            <div class="row justify-content-between text-center">
-              <div class="col-5 mx-2">
+            <!-- FIXME almost there! drop down closes immediately and sometimes doesn't show list at all wth...WAIT if i go to account page, then back to keep details modal, THEN the list shows, but it also shows old vaults that have been deleted? :(  -->
+            <div class="row justify-content-between text-center position-bottom">
+              <div class="col-3 mx-2">
                 <div class="dropdown btn-group">
                   <button type="button" class="btn drop-btn dropdown-toggle" data-bs-toggle="dropdown"
                     aria-expanded="false">
@@ -40,19 +40,16 @@
                 </div>
               </div>
 
-
-              <div class="col-5 d-flex flex-row" v-if="activeKeep">
+              <div class="col-3" v-if="activeKeep">
                 <router-link :to="{ name: 'Profile', params: { profileId: activeKeep?.creatorId } }">
                   <div class="">
-                    <img @click.stop :src="activeKeep?.creator.picture" alt="" class="img-fluid rounded-circle m-1"
-                      height="50" width="50">
+                    <img @click.stop :src="activeKeep?.creator.picture" alt=""
+                      class="img-fluid rounded-circle m-1 elevation-5" height="50" width="50">
                   </div>
                 </router-link>
                 <div class="">{{ activeKeep?.creator.name }}</div>
               </div>
-            </div>
 
-            <div class="row justify-content-center">
               <div class="col-3">
                 <div @click.prevent="removeKeep(keep.id)" class="">
                   <button v-show="activeKeep?.creatorId == account.id" class="btn btn-success p-2 my-2 hover">
@@ -60,6 +57,7 @@
                   </button>
                 </div>
               </div>
+
             </div>
           </div>
         </div>
@@ -84,7 +82,7 @@ export default {
       keep: computed(() => AppState.activeKeep),
       vaults: computed(() => AppState.myVaults),
       user: computed(() => AppState.user),
-      // userVaults: computed(() => AppState.userVaults)
+      userVaults: computed(() => AppState.userVaults),
 
       async removeKeep(id) {
         try {
@@ -102,5 +100,7 @@ export default {
 
 
 <style lang="scss" scoped>
-
+// .position-bottom {
+//   position: fixed;
+// }
 </style>

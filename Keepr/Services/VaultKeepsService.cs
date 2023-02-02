@@ -21,7 +21,7 @@ public class VaultKeepsService
   {
     Vault vault = _vaultsRepo.GetVaultById(vaultKeepData.VaultId);
     Keep keep = _repo.GetOne(vaultKeepData.KeepId);
-    keep.Kept++;
+
     if (vault == null)
     {
       throw new Exception("No vault at this id.");
@@ -30,6 +30,8 @@ public class VaultKeepsService
     {
       throw new Exception("You do not have permission to add a keep to this vault.");
     }
+    keep.Kept++;
+    _repo.EditKeep(keep);
     VaultKeep vaultKeep = _vkRepo.CreateVaultKeep(vaultKeepData);
     return vaultKeep;
   }
