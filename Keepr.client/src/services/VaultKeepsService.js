@@ -8,6 +8,15 @@ class VaultKeepsService {
     logger.log('[GETTING VAULTKEEPS]', res.data)
     AppState.vaultKeeps = res.data
   }
+
+  async addVaultKeep(vaultId, keepId) {
+    let vaultKeep = { vaultId, keepId }
+    const res = await api.post('api/vaultkeeps', vaultKeep)
+    logger.log('[CREATING NEW VAULTKEEP]', res.data)
+    AppState.activeKeep.kept++
+    AppState.vaultKeeps.push(res.data)
+    return res.data
+  }
 }
 
 export const vaultKeepsService = new VaultKeepsService();

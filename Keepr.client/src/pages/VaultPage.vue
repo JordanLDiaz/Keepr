@@ -6,11 +6,16 @@
         <div class="card">
           <img :src="vault?.img" class="vault-cover rounded elevation-5">
           <div class="card-img-overlay text-white text-shadow d-flex flex-column justify-content-between">
-            <h3 class="text-uppercase">{{ vault?.name }}</h3>
+            <h3 class="text-uppercase">{{ vault?.name }} <span v-if="vault?.isPrivate" class="mdi mdi-lock"></span></h3>
             <h5>by <span class="text-lowercase">{{ vault?.creator.name }}</span></h5>
           </div>
         </div>
         <h5 class="mt-2"><span>{{ vaultKeeps.length }}</span> Keeps</h5>
+        <div @click.prevent="removeVault(vault?.id)" class="">
+          <button v-show="vault?.creatorId == account?.id" class="btn btn-success p-2 my-2 hover">
+            <i class="mdi mdi-trash-can">Remove Valt</i>
+          </button>
+        </div>
       </div>
     </div>
 
@@ -26,23 +31,28 @@
 
 <script>
 import { AppState } from '../AppState';
-import { computed, reactive, onMounted } from 'vue';
+import { computed, reactive, onMounted, ref } from 'vue';
 import { useRoute } from "vue-router";
 import { vaultsService } from "../services/VaultsService.js";
 import { logger } from "../utils/Logger.js";
 import Pop from "../utils/Pop.js";
 import { vaultKeepsService } from "../services/VaultKeepsService.js";
+import { router } from "../router.js";
 
 export default {
   setup() {
     const route = useRoute();
+    const isPrivate = ref(false);
 
     async function getVault() {
       try {
         await vaultsService.getVault(route.params.vaultId);
       } catch (error) {
-        logger.error(error)
-        Pop.error(error.message)
+        isPrivate.value = true
+        Pop.error("You do not have permission to view others private vaults", "error")
+        setTimeout(() => {
+          router.push({ name: 'Home' })
+        }, 4000);
       }
     }
 
@@ -62,8 +72,19 @@ export default {
     return {
       vault: computed(() => AppState.activeVault),
       vaultKeeps: computed(() => AppState.vaultKeeps),
+      account: computed(() => AppState.account),
       getVault,
-      getVaultKeeps
+      getVaultKeeps,
+
+      async removeVault(vaultId) {
+        try {
+          if (await Pop.confirm('Are you sure you want to delete this vaule?', 'This cannot be undone'))
+            await vaultsService.removeVault(vaultId)
+        } catch (error) {
+          logger.error(error)
+          Pop.error(error.message)
+        }
+      }
     }
   }
 };

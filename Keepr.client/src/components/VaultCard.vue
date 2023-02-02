@@ -4,6 +4,7 @@
       <img :src="vault?.img" class="vault-cover rounded">
       <div class="card-img-overlay d-flex align-items-end">
         <h4 class="text-white text-shadow text-uppercase"> {{ vault?.name }}</h4>
+        <span v-if="vault.isPrivate"><i class="mdi mdi-lock" title="Private Vault"></i></span>
       </div>
     </div>
   </router-link>

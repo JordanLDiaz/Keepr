@@ -5,7 +5,7 @@
         <h4>ADD YOUR VAULT</h4>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form @submit.prevent="createVault">
+      <form @submit.prevent="createVault()">
         <div class="modal-body">
           <div class="form-floating elevation-5 my-3">
             <input v-model="editable.name" type="text" maxlength="50" class="form-control" id="name"
@@ -23,7 +23,7 @@
             <label for="Vault description" class="form-label">Vault description...</label>
           </div>
           <div class="form-check my-3">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <input v-model="editable.isPrivate" class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
             <label class="form-check-label" for="flexCheckDefault">
               Make Vault Private?
             </label>
@@ -51,18 +51,18 @@ import { useRouter } from 'vue-router';
 
 export default {
   setup() {
-    const editable = ref({})
-    // const router = useRouter()
+    const editable = ref({ isPrivate: false })
+    const router = useRouter()
 
     return {
       editable,
 
       async createVault() {
         try {
-          await vaultsService.createVault(editable.value)
+          const vault = await vaultsService.createVault(editable.value)
           editable.value = {}
           Modal.getOrCreateInstance('#NewVaultForm').hide();
-          // router.push({ name: 'Vault', params: { vaultId: vault.id } })
+          router.push({ name: 'Vault', params: { vaultId: vault.id } })
         } catch (error) {
           logger.error(error)
           Pop.error(error.message)

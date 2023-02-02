@@ -70,8 +70,7 @@ export default {
       getUserProfile()
       getUserKeeps()
       getUserVaults()
-    }
-    )
+    })
     return {
       account: computed(() => AppState.account),
       profile: computed(() => AppState.activeProfile),
