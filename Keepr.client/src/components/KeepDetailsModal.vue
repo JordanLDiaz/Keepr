@@ -48,7 +48,7 @@
                   </div>
                 </div>
 
-                <div class="col-4 d-flex justify-content-end" v-if="activeKeep">
+                <div class="col-4 d-flex justify-content-end" v-if="activeKeep" data-bs-dismiss="modal">
                   <router-link :to="{ name: 'Profile', params: { profileId: activeKeep?.creatorId } }">
                     <div class="">
                       <img @click.stop :src="activeKeep?.creator.picture" alt=""
@@ -57,7 +57,7 @@
                         :aria-label="`See ${keep.creator?.name}'s Profile`">
                     </div>
                   </router-link>
-                  <div class="ms-2 d-flex align-items-center">{{ activeKeep?.creator.name }}</div>
+                  <div class="ms-2 d-flex align-items-center">{{ activeKeep?.creator?.name }}</div>
                 </div>
               </div>
             </div>
@@ -89,7 +89,7 @@ export default {
 
       async removeKeep(id) {
         try {
-          const yes = await Pop.confirm('Are you sure you want to delete this keep?', 'This cannot be undone')
+          const yes = await Pop.confirm('Are you sure you want to delete this keep?', 'This will delete the entire keep, not just from a vault!')
           if (!yes) {
             return
           }
