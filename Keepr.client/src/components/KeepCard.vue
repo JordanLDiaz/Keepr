@@ -28,8 +28,8 @@
         </div>
       </div>
     </div>
-    <div @click.stop="removeVaultKeep(keep.vaultKeepId)">
-      <button v-if="user.isAuthenticated" class="btn remove-btn fs-5">
+    <div v-if="account.id == vault.creatorId" @click.stop="removeVaultKeep(keep.vaultKeepId)">
+      <button class="btn remove-btn fs-5">
         <i class="mdi mdi-trash-can" title="Remove Vault Keep" aria-label="Remove Vault Keep"></i>
       </button>
     </div>
@@ -98,7 +98,7 @@ export default {
       routeAccountPage: computed(() => route.name == "Account"),
       routeProfilePage: computed(() => route.name == "Profile"),
       account: computed(() => AppState.account),
-      vault: computed(() => AppState.vault),
+      vault: computed(() => AppState.activeVault),
       user: computed(() => AppState.user),
 
       async setActiveKeep(keep) {
@@ -113,6 +113,7 @@ export default {
 
       async removeVaultKeep(vaultKeepId) {
         try {
+          debugger
           const yes = await Pop.confirm('Are you sure you want to delete this keep from your vault?', 'This cannot be undone')
           if (!yes) {
             return
