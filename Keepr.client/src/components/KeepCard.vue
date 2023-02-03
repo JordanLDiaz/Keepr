@@ -3,12 +3,14 @@
   <div @click="setActiveKeep(keep)" class="selectable" data-bs-toggle="modal" data-bs-target="#keepDetailsModal">
     <div class="bg-img card my-3 elevation-5">
       <img :src="keep.img" class="rounded card-img" :title="keep.name" :aria-label="keep.name">
-      <div class="card-img-overlay d-flex align-items-end justify-content-between pb-1">
+      <div class="card-img-overlay d-flex align-items-end justify-content-between pb-1" title="See keep details"
+        aria-label="See keep details">
         <h4 class="text-white text-shadow text-lowercase" :title="keep.name" :aria-label="keep.name">{{ keep.name }}
         </h4>
         <router-link :to="{ name: 'Profile', params: { profileId: keep.creatorId } }">
-          <img :src="keep.creator?.picture" :alt="keep.creator?.name" class="img-fluid rounded-circle m-1 elevation-3"
-            height="50" width="50" :title="keep.creator?.name" :aria-label="keep.creator?.name">
+          <img v-if="keep" :src="keep.creator?.picture" :alt="keep.creator?.name"
+            class="img-fluid rounded-circle m-1 elevation-3" height="50" width="50"
+            :title="`See ${keep.creator?.name}'s Profile`" :aria-label="`See ${keep.creator?.name}'s Profile`">
         </router-link>
       </div>
     </div>
@@ -22,6 +24,7 @@ import { computed, reactive, onMounted } from 'vue';
 import { keepsService } from "../services/KeepsService.js";
 import { logger } from "../utils/Logger.js";
 import Pop from "../utils/Pop.js";
+import { Modal } from "bootstrap";
 
 export default {
   props: {
@@ -39,7 +42,16 @@ export default {
           logger.error(error)
           Pop.error(error.message)
         }
-      }
+      },
+
+      // hideModal() {
+      //   try {
+      //     Modal.getOrCreateInstance('#keepDetailsModal').hide()
+      //   } catch (error) {
+      //     logger.error(error)
+      //     Pop.error(error.message)
+      //   }
+      // }
     }
   }
 };

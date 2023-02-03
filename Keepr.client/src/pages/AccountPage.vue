@@ -12,7 +12,8 @@
     <!-- Account Edit Collapse -->
     <div class="rounded text-white  text-center">
       <button class="btn text-shadow border selectable elevation-2" type="button" data-bs-toggle="collapse"
-        data-bs-target="#collapseAccountForm" aria-expanded="false" aria-controls="collapseExample">Update Account
+        data-bs-target="#collapseAccountForm" aria-expanded="false" aria-controls="collapseExample"
+        title="Update account details" aria-label="Update account details">Update Account
         Details <i class="mdi mdi-pencil"></i></button>
     </div>
 
@@ -33,7 +34,8 @@
                   v-model="editable.coverImg" />
               </div>
               <div class="mt-2">
-                <button type="submit" class="btn btn-info selectable mt-2 hover elevation-2">Submit</button>
+                <button type="submit" class="btn submit-btn selectable mt-2 hover elevation-2 text-shadow text-white"
+                  title="Submit account update" aria-label="Submit account update">Submit</button>
               </div>
             </div>
           </form>
@@ -153,17 +155,30 @@ export default {
 }
 
 .text-shadow {
-  text-shadow: 2px 2px 4px #777676;
+  text-shadow: 1px 1px 2px #6af7e088;
+}
+
+.submit-btn {
+  background-color: #55EFC4;
 }
 
 .masonry-with-columns {
-  columns: 4 200px;
-  column-gap: 1rem;
+  columns: 4;
+  column-gap: 1.0rem;
 
   div {
-    width: 100px;
     display: inline-block;
-    width: 100%;
+  }
+}
+
+@media screen AND (max-width: 768px) {
+  .masonry-with-columns {
+    columns: 2;
+    column-gap: 1.0rem;
+
+    div {
+      display: inline-block;
+    }
   }
 }
 </style>

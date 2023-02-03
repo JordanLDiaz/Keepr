@@ -1,10 +1,15 @@
 <template>
   <router-link :to="{ name: 'Vault', params: { vaultId: vault.id } }">
-    <div class="bg-img card my-3 elevation-5">
+    <div class="card my-3 elevation-5">
       <img :src="vault?.img" class="vault-cover rounded">
-      <div class="card-img-overlay d-flex align-items-end">
-        <h4 class="text-white text-shadow text-uppercase"> {{ vault?.name }}</h4>
-        <span v-if="vault.isPrivate"><i class="mdi mdi-lock" title="Private Vault"></i></span>
+      <div class="card-img-overlay d-flex align-items-end" title="See vault details" aria-label="See vault details">
+        <h3 class="col-11 my-0 text-white text-shadow text-uppercase" :title="vault.name" :aria-label="vault.name"> {{
+          vault?.name
+        }}</h3>
+        <h3 class="my-0">
+          <span v-if="vault.isPrivate"><i class="mdi mdi-lock lock" title="Private Vault"
+              aria-label="Private Vault"></i></span>
+        </h3>
       </div>
     </div>
   </router-link>
@@ -42,5 +47,17 @@ export default {
 <style lang="scss" scoped>
 .text-shadow {
   text-shadow: 2px 2px 4px #000000;
+}
+
+.vault-cover {
+  max-height: 30vh;
+  min-height: 30vh;
+  background-size: contain;
+  background-position: center;
+}
+
+.lock {
+  color: #74B9FF;
+  text-shadow: 2px 2px 2px #000000;
 }
 </style>

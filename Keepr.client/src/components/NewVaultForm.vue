@@ -31,7 +31,8 @@
             <i>Private vaults can only be seen by you.</i>
           </div>
           <div class="my-3">
-            <button type="submit" class="btn btn-success bg-success">Create Vault</button>
+            <button type="submit" class="btn btn-success bg-success" title="Create a new vault"
+              aria-label="Create a new vault">Create Vault</button>
           </div>
         </div>
       </form>

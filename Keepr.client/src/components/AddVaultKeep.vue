@@ -21,6 +21,7 @@ export default {
           console.log(props.vault)
           const keepId = AppState.activeKeep.id
           await vaultKeepsService.addVaultKeep(vaultId, keepId)
+          Pop.toast("Keep was successfully added to vault", "success")
         } catch (error) {
           logger.error(error)
           Pop.error(error.message)

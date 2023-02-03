@@ -23,7 +23,8 @@
             <label for="keep description" class="form-label">Keep description...</label>
           </div>
           <div class="">
-            <button type="submit" class="btn btn-success bg-success">Create Keep</button>
+            <button type="submit" class="btn btn-success bg-success" title="Create a new keep"
+              aria-label="Created a new Keep">Create Keep</button>
           </div>
         </div>
       </form>

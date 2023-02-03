@@ -99,13 +99,22 @@ export default {
 }
 
 .masonry-with-columns {
-  columns: 4 200px;
-  column-gap: 1rem;
+  columns: 4;
+  column-gap: 1.0rem;
 
   div {
-    width: 100px;
     display: inline-block;
-    width: 100%;
+  }
+}
+
+@media screen AND (max-width: 768px) {
+  .masonry-with-columns {
+    columns: 2;
+    column-gap: 1.0rem;
+
+    div {
+      display: inline-block;
+    }
   }
 }
 </style>
