@@ -1,27 +1,31 @@
 <template>
-  <div class="row text-center">
-    <div>
-      <img class="mt-4 rounded cover-img" :src="profile?.coverImg" alt="">
+  <div class="container">
+    <div class="row text-center">
+      <div>
+        <img class="mt-4 rounded cover-img" :src="profile?.coverImg" alt="">
+      </div>
+      <div>
+        <img class="rounded-circle prof-pic" :src="profile?.picture" alt="" />
+      </div>
+      <h3> {{ profile?.name }}</h3>
+      <div><span> {{ vaults.length }} </span> Vaults | <span> {{ keeps.length }} </span> Keeps</div>
     </div>
-    <div>
-      <img class="rounded-circle prof-pic" :src="profile?.picture" alt="" />
-    </div>
-    <h3> {{ profile?.name }}</h3>
-    <div><span> {{ vaults.length }} </span> Vaults | <span> {{ keeps.length }} </span> Keeps</div>
   </div>
 
   <div class="container">
     <div class="row">
-      <h2>Vaults</h2>
-      <div class="col-3" v-for="v in vaults">
-        <VaultCard :vault="v" />
+      <div class="">
+        <h2>Vaults</h2>
+        <div class="col-3" v-for="v in vaults">
+          <VaultCard :vault="v" />
+        </div>
       </div>
-    </div>
 
-    <h2>Keeps</h2>
-    <div class="masonry-with-columns">
-      <div class="" v-for="k in keeps">
-        <KeepCard :keep="k" />
+      <h2>Keeps</h2>
+      <div class="masonry-with-columns">
+        <div class="" v-for="k in keeps">
+          <KeepCard :keep="k" />
+        </div>
       </div>
     </div>
   </div>

@@ -12,7 +12,7 @@ public class VaultsRepository
   internal Vault CreateVault(Vault vaultData)
   {
     string sql = @"
-    INSERT INTO vaults
+    INSERT INTO JDvaults
     (creatorId, name, description, img, isPrivate)
     VALUES
     (@creatorId, @name, @description, @img, @isPrivate);
@@ -27,11 +27,11 @@ public class VaultsRepository
   {
     string sql = @"
     SELECT
-    vaults.*,
-    accounts.*
-    FROM vaults
-    JOIN accounts ON accounts.id = vaults.CreatorId
-    WHERE vaults.id = @vaultId;
+    JDvaults.*,
+    JDaccounts.*
+    FROM JDvaults
+    JOIN JDaccounts ON JDaccounts.id = JDvaults.CreatorId
+    WHERE JDvaults.id = @vaultId;
     ";
     Vault vault = _db.Query<Vault, Profile, Vault>(sql, (vault, profile) =>
     {
@@ -43,7 +43,7 @@ public class VaultsRepository
   internal bool EditVault(Vault original)
   {
     string sql = @"
-    UPDATE vaults
+    UPDATE JDvaults
     SET
     name = @name,
     description = @description,
@@ -58,7 +58,7 @@ public class VaultsRepository
   internal void RemoveVault(int id)
   {
     string sql = @"
-    DELETE FROM vaults
+    DELETE FROM JDvaults
     WHERE id = @id;
     ";
     _db.Execute(sql, new { id });
@@ -68,11 +68,11 @@ public class VaultsRepository
   {
     string sql = @"
     SELECT
-    vaults.*,
-    accounts.*
-    FROM vaults
-    JOIN accounts ON accounts.id = vaults.creatorId
-    WHERE vaults.creatorId = @id;
+    JDvaults.*,
+    JDaccounts.*
+    FROM JDvaults
+    JOIN JDaccounts ON JDaccounts.id = JDvaults.creatorId
+    WHERE JDvaults.creatorId = @id;
     ";
     return _db.Query<Vault, Account, Vault>(sql, (vault, account) =>
     {

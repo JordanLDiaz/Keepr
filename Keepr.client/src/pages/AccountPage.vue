@@ -1,46 +1,48 @@
 <template>
-  <div class="row text-center">
-    <div>
-      <img class="mt-4 rounded cover-img" :src="account?.coverImg" alt="">
-    </div>
-    <div>
-      <img class="rounded-circle prof-pic" :src="account?.picture" alt="" />
-    </div>
-    <h1> {{ account?.name }}</h1>
-    <div><span>{{ vaults.length }}</span> Vaults | <span>{{ myKeeps.length }}</span> Keeps</div>
+  <div class="container">
+    <div class="row text-center">
+      <div>
+        <img class="mt-4 rounded cover-img" :src="account?.coverImg" alt="">
+      </div>
+      <div>
+        <img class="rounded-circle prof-pic" :src="account?.picture" alt="" />
+      </div>
+      <h1> {{ account?.name }}</h1>
+      <div><span>{{ vaults.length }}</span> Vaults | <span>{{ myKeeps.length }}</span> Keeps</div>
 
-    <!-- Account Edit Collapse -->
-    <div class="rounded text-white  text-center">
-      <button class="btn text-shadow border selectable elevation-2" type="button" data-bs-toggle="collapse"
-        data-bs-target="#collapseAccountForm" aria-expanded="false" aria-controls="collapseExample"
-        title="Update account details" aria-label="Update account details">Update Account
-        Details <i class="mdi mdi-pencil"></i></button>
-    </div>
+      <!-- Account Edit Collapse -->
+      <div class="row rounded text-white text-center">
+        <button class="btn text-shadow border selectable elevation-2" type="button" data-bs-toggle="collapse"
+          data-bs-target="#collapseAccountForm" aria-expanded="false" aria-controls="collapseExample"
+          title="Update account details" aria-label="Update account details">Update Account
+          Details <i class="mdi mdi-pencil"></i></button>
+      </div>
 
-    <div class="collapse" id="collapseAccountForm">
-      <section class="row justify-content-center">
-        <div class="col-6 d-flex justify-content-center">
-          <form @submit.prevent="editAccount(account.id)" class="input-group p-3 justify-content-center">
-            <div class="">
-              <div class="d-flex flex-column">
-                <label class="mt-2" for="name">Change Name</label>
-                <input class="mt-2 col-12 form-input" type="text" name="name" placeholder="New account name..."
-                  v-model="editable.name" />
-                <label class="mt-2" for="picture">Profile Picture URL</label>
-                <input class="mt-2 form-input" type="url" name="picture" placeholder="New profile picture..."
-                  v-model="editable.picture" />
-                <label class="mt-2" for="picture">Cover Image Picture URL</label>
-                <input class="mt-2 form-input" type="url" name="coverImg" placeholder="New cover image..."
-                  v-model="editable.coverImg" />
+      <div class="collapse" id="collapseAccountForm">
+        <section class="row justify-content-center">
+          <div class="col-6 d-flex justify-content-center">
+            <form @submit.prevent="editAccount(account.id)" class="input-group p-3 justify-content-center">
+              <div class="">
+                <div class="d-flex flex-column">
+                  <label class="mt-2" for="name">Change Name</label>
+                  <input class="mt-2 col-12 form-input" type="text" name="name" placeholder="New account name..."
+                    v-model="editable.name" />
+                  <label class="mt-2" for="picture">Profile Picture URL</label>
+                  <input class="mt-2 form-input" type="url" name="picture" placeholder="New profile picture..."
+                    v-model="editable.picture" />
+                  <label class="mt-2" for="picture">Cover Image Picture URL</label>
+                  <input class="mt-2 form-input" type="url" name="coverImg" placeholder="New cover image..."
+                    v-model="editable.coverImg" />
+                </div>
+                <div class="mt-2">
+                  <button type="submit" class="btn submit-btn selectable mt-2 hover elevation-2 text-shadow text-white"
+                    title="Submit account update" aria-label="Submit account update">Submit</button>
+                </div>
               </div>
-              <div class="mt-2">
-                <button type="submit" class="btn submit-btn selectable mt-2 hover elevation-2 text-shadow text-white"
-                  title="Submit account update" aria-label="Submit account update">Submit</button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </section>
+            </form>
+          </div>
+        </section>
+      </div>
     </div>
   </div>
 
@@ -59,7 +61,6 @@
       </div>
     </div>
   </div>
-
 </template>
 
 <script>

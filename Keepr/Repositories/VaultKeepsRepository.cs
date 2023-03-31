@@ -12,7 +12,7 @@ public class VaultKeepsRepository
   internal VaultKeep CreateVaultKeep(VaultKeep vaultKeepData)
   {
     string sql = @"
-    INSERT INTO vaultKeeps
+    INSERT INTO JDvaultKeeps
     (creatorId, vaultId, keepId)
     VALUES
     (@creatorId, @vaultId, @keepId);
@@ -28,17 +28,17 @@ public class VaultKeepsRepository
   {
     string sql = @"
     SELECT 
-    vaultKeeps.*,
-    COUNT(vaultKeeps.id) AS Kept,
-    vaultKeeps.id AS vaultKeepId,
-    vaultKeeps.CreatorId AS VaultKeepCreatorId,
-    keeps.*,
-    accounts.*
-    FROM vaultKeeps
-    JOIN accounts ON accounts.id = vaultKeeps.creatorId
-    JOIN keeps ON keeps.id = vaultKeeps.keepId
-    WHERE vaultKeeps.vaultId = @vaultId
-    GROUP BY vaultKeeps.id;
+    JDvaultKeeps.*,
+    COUNT(JDvaultKeeps.id) AS Kept,
+    JDvaultKeeps.id AS vaultKeepId,
+    JDvaultKeeps.CreatorId AS VaultKeepCreatorId,
+    JDkeeps.*,
+    JDaccounts.*
+    FROM JDvaultKeeps
+    JOIN JDaccounts ON JDaccounts.id = JDvaultKeeps.creatorId
+    JOIN JDkeeps ON JDkeeps.id = JDvaultKeeps.keepId
+    WHERE JDvaultKeeps.vaultId = @vaultId
+    GROUP BY JDvaultKeeps.id;
     ";
     return _db.Query<KeptKeep, Profile, KeptKeep>(sql, (keep, profile) =>
     {
@@ -52,8 +52,8 @@ public class VaultKeepsRepository
     string sql = @"
     SELECT
     *,
-    vaultKeeps.id AS vaultKeepId
-    FROM vaultKeeps
+    JDvaultKeeps.id AS vaultKeepId
+    FROM JDvaultKeeps
     WHERE id = @vaultKeepId;
     ";
     return _db.Query<VaultKeep>(sql, new { vaultKeepId }).FirstOrDefault();
@@ -62,7 +62,7 @@ public class VaultKeepsRepository
   internal string RemoveVaultKeep(int vaultKeepId)
   {
     string sql = @"
-    DELETE FROM vaultKeeps
+    DELETE FROM JDvaultKeeps
     WHERE id = @vaultKeepId;
     ";
     _db.Execute(sql, new { vaultKeepId });
