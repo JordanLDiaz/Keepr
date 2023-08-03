@@ -21,27 +21,24 @@ public class KeepsService
         return keeps;
     }
 
-    internal Keep GetOne(int id)
+    internal Keep GetOne(int id, string userId)
     {
         Keep keep = _repo.GetOne(id);
         if (keep.Creator == null)
         {
             throw new Exception("No keep at this id.");
         }
-        keep.Views++;
-        _repo.EditKeep(keep);
-
-        // if (keep.CreatorId != userId)
-        // {
-        //   keep.Views++;
-        //   _repo.EditKeep(keep);
-        // }
+        if (keep.CreatorId != userId)
+        {
+            keep.Views++;
+            _repo.EditKeep(keep);
+        }
         return keep;
     }
 
     internal Keep EditKeep(Keep updateData, int id, string userId)
     {
-        Keep original = GetOne(updateData.Id);
+        Keep original = GetOne(updateData.Id, userId);
         if (original.CreatorId != userId)
         {
             throw new Exception("This is not your keep to edit.");
@@ -56,7 +53,7 @@ public class KeepsService
 
     internal string Remove(int id, string userId)
     {
-        Keep keep = GetOne(id);
+        Keep keep = GetOne(id, userId);
         if (keep == null)
         {
             throw new Exception("No keep exists at this id.");
