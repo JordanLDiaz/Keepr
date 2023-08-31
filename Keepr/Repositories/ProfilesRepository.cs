@@ -14,7 +14,7 @@ public class ProfilesRepository
     string sql = @"
     SELECT 
     *
-    FROM JDaccounts
+    FROM accounts
     WHERE id = @profileId;
     ";
     return _db.Query<Profile>(sql, new { profileId }).FirstOrDefault();
@@ -24,11 +24,11 @@ public class ProfilesRepository
   {
     string sql = @"
     SELECT
-    JDkeeps.*,
-    JDaccounts.*
-    FROM JDkeeps
-    JOIN JDaccounts ON JDaccounts.id = JDkeeps.creatorId
-    WHERE JDkeeps.creatorId = @profileId;
+    keeps.*,
+    accounts.*
+    FROM keeps
+    JOIN accounts ON accounts.id = keeps.creatorId
+    WHERE keeps.creatorId = @profileId;
     ";
     return _db.Query<Keep, Profile, Keep>(sql, (keep, profile) =>
     {
@@ -41,11 +41,11 @@ public class ProfilesRepository
   {
     string sql = @"
     SELECT
-    JDvaults.*,
-    JDaccounts.*
-    FROM JDvaults
-    JOIN JDaccounts ON JDaccounts.id = JDvaults.creatorId
-    WHERE JDvaults.creatorId = @profileId && JDvaults.isPrivate != 1;
+    vaults.*,
+    accounts.*
+    FROM vaults
+    JOIN accounts ON accounts.id = vaults.creatorId
+    WHERE vaults.creatorId = @profileId && vaults.isPrivate != 1;
     ";
     return _db.Query<Vault, Profile, Vault>(sql, (vault, profile) =>
     {

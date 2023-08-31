@@ -12,7 +12,7 @@ public class KeepsRepository
     public Keep Create(Keep keepData)
     {
         string sql = @"
-    INSERT INTO JDkeeps
+    INSERT INTO keeps
     (creatorId, name, description, img, views)
     VALUES
     (@creatorId, @name, @description, @img, @views);
@@ -27,13 +27,13 @@ public class KeepsRepository
     {
         string sql = @"
     SELECT
-    JDkeeps.*,
-    COUNT(JDvaultKeeps.id) AS kept,
-    JDaccounts.*
-    FROM JDkeeps
-    JOIN JDaccounts ON JDaccounts.id = JDkeeps.CreatorId
-    LEFT JOIN JDvaultKeeps ON JDvaultKeeps.keepId = JDkeeps.id
-    GROUP BY JDkeeps.id;
+    keeps.*,
+    COUNT(vaultKeeps.id) AS kept,
+    accounts.*
+    FROM keeps
+    JOIN accounts ON accounts.id = keeps.CreatorId
+    LEFT JOIN vaultKeeps ON vaultKeeps.keepId = keeps.id
+    GROUP BY keeps.id;
     ";
         List<Keep> keeps = _db.Query<Keep, Profile, Keep>(sql, (keep, profile) =>
         {
@@ -47,14 +47,14 @@ public class KeepsRepository
     {
         string sql = @"
     SELECT 
-    JDkeeps.*,
-    COUNT(JDvaultKeeps.id) AS kept,
-    JDaccounts.*
-    FROM JDkeeps
-    JOIN JDaccounts ON JDaccounts.id = JDkeeps.creatorId
-    LEFT JOIN JDvaultKeeps ON JDvaultKeeps.keepId = JDkeeps.id
-    WHERE JDkeeps.id = @id
-    GROUP BY(JDkeeps.id);
+    keeps.*,
+    COUNT(vaultKeeps.id) AS kept,
+    accounts.*
+    FROM keeps
+    JOIN accounts ON accounts.id = keeps.creatorId
+    LEFT JOIN vaultKeeps ON vaultKeeps.keepId = keeps.id
+    WHERE keeps.id = @id
+    GROUP BY(keeps.id);
     ";
         return _db.Query<Keep, Profile, Keep>(sql, (keep, profile) =>
         {
@@ -66,7 +66,7 @@ public class KeepsRepository
     public bool EditKeep(Keep original)
     {
         string sql = @"
-    UPDATE JDkeeps
+    UPDATE keeps
     SET 
     name = @name,
     description = @description,
@@ -81,7 +81,7 @@ public class KeepsRepository
     public bool Remove(int id)
     {
         string sql = @"
-    DELETE FROM JDkeeps
+    DELETE FROM keeps
     WHERE id = @id;
     ";
         int rows = _db.Execute(sql, new { id });

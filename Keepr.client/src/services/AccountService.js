@@ -17,7 +17,7 @@ class AccountService {
     try {
       const res = await api.get('account/vaults')
       AppState.myVaults = res.data
-      console.log(res.data)
+      // console.log(res.data)
     } catch (error) {
       logger.error(error)
     }

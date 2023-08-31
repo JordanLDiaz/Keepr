@@ -17,8 +17,8 @@ export default {
       async addVaultKeep() {
         try {
           const vaultId = props.vault.id
-          console.log(vaultId)
-          console.log(props.vault)
+          // console.log(vaultId)
+          // console.log(props.vault)
           const keepId = AppState.activeKeep.id
           await vaultKeepsService.addVaultKeep(vaultId, keepId)
           Pop.toast("Keep was successfully added to vault", "success")
@@ -33,6 +33,4 @@ export default {
 </script>
 
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

@@ -1,6 +1,7 @@
--- Active: 1680282356336@@54.187.169.182@3306@classroom_demos
+-- Active: 1693350154447@@146.190.61.30@3306@keepr
+
 CREATE TABLE
-    IF NOT EXISTS JDaccounts(
+    IF NOT EXISTS accounts(
         id VARCHAR(255) NOT NULL primary key COMMENT 'primary key',
         createdAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Time Created',
         updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last Update',
@@ -10,10 +11,10 @@ CREATE TABLE
         coverImg VARCHAR(255) DEFAULT 'https://images.unsplash.com/photo-1500964757637-c85e8a162699?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8Y292ZXIlMjBpbWFnZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60' COMMENT 'User Cover Image'
     ) default charset utf8 COMMENT '';
 
-DROP TABLE JDaccounts;
+DROP TABLE accounts;
 
 CREATE TABLE
-    IF NOT EXISTS JDvaults(
+    IF NOT EXISTS vaults(
         id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
         creatorId VARCHAR(255) NOT NULL,
         name VARCHAR(255) NOT NULL COMMENT 'Vault Name',
@@ -22,13 +23,13 @@ CREATE TABLE
         createdAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Time Created',
         updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last Update',
         isPrivate BOOLEAN NOT NULL DEFAULT false,
-        FOREIGN KEY (creatorId) REFERENCES JDaccounts (id) ON DELETE CASCADE
+        FOREIGN KEY (creatorId) REFERENCES accounts (id) ON DELETE CASCADE
     ) default charset utf8 COMMENT '';
 
-DROP TABLE JDvaults;
+DROP TABLE vaults;
 
 CREATE TABLE
-    IF NOT EXISTS JDkeeps(
+    IF NOT EXISTS keeps(
         id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
         creatorId VARCHAR(255) NOT NULL,
         name VARCHAR(255) NOT NULL COMMENT 'Keep Name',
@@ -38,31 +39,33 @@ CREATE TABLE
         kept INT NOT NULL DEFAULT 0 COMMENT 'Keep keeps',
         createdAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Time Created',
         updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last Update',
-        FOREIGN KEY (creatorId) REFERENCES JDaccounts (id) ON DELETE CASCADE
+        FOREIGN KEY (creatorId) REFERENCES accounts (id) ON DELETE CASCADE
     ) default charset utf8 COMMENT '';
 
-DROP TABLE JDkeeps;
+DROP TABLE keeps;
 
 CREATE TABLE
-    IF NOT EXISTS JDvaultKeeps(
+    IF NOT EXISTS vaultKeeps(
         id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
         creatorId VARCHAR(255) NOT NULL,
         vaultId INT NOT NULL,
         keepId INT NOT NULL,
         createdAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Time Created',
         updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last Update',
-        FOREIGN KEY (creatorId) REFERENCES JDaccounts (id) ON DELETE CASCADE,
-        FOREIGN KEY (vaultId) REFERENCES JDvaults (id) ON DELETE CASCADE,
-        FOREIGN KEY (keepId) REFERENCES JDkeeps (id) ON DELETE CASCADE
+        FOREIGN KEY (creatorId) REFERENCES accounts (id) ON DELETE CASCADE,
+        FOREIGN KEY (vaultId) REFERENCES vaults (id) ON DELETE CASCADE,
+        FOREIGN KEY (keepId) REFERENCES keeps (id) ON DELETE CASCADE
     ) default charset utf8 COMMENT '';
 
-DROP TABLE JDvaultKeeps;
+DROP TABLE vaultKeeps;
 
 SELECT
-    JDkeeps.*,
-    COUNT(JDvaultKeeps.id) AS kept,
-    JDaccounts.*
-FROM JDkeeps
-    JOIN JDaccounts ON JDaccounts.id = JDkeeps.creatorId
-    LEFT JOIN JDvaultKeeps ON JDvaultKeeps.keepId = JDkeeps.id
-WHERE JDkeeps.id = 1;
+    keeps.*,
+    COUNT(vaultKeeps.id) AS kept,
+    accounts.*
+FROM keeps
+    JOIN accounts ON accounts.id = keeps.creatorId
+    LEFT JOIN vaultKeeps ON vaultKeeps.keepId = keeps.id
+WHERE keeps.id = 1;
+
+CREATE DATABASE keepr DEFAULT CHARACTER SET = 'utf8mb4';
