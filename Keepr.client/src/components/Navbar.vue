@@ -37,7 +37,7 @@
 
     <router-link :to="{ name: 'Home' }">
       <div class="">
-        <img alt="logo" src="../assets/img/keepr-logo.png" height="50" title="Home" aria-label="Home button" />
+        <img alt="logo" src="../assets/img/Keepr-logo.png" height="50" title="Home" aria-label="Home button" />
       </div>
     </router-link>
 
