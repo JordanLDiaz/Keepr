@@ -12,7 +12,7 @@ git pull
 
 # rebuild client
 cd Keepr.client
-npm run build
+/root/.nvm/versions/node/v18.17.1/bin/npm run build
 
 # rebuild server
 cd ../Keepr
