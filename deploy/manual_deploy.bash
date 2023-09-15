@@ -2,6 +2,10 @@
 set -e
 set -x
 
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
 SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 
 # Go to top level directory
@@ -12,7 +16,7 @@ git pull
 
 # rebuild client
 cd Keepr.client
-/root/.nvm/versions/node/v18.17.1/bin/npm run build
+npm run build
 
 # rebuild server
 cd ../Keepr
