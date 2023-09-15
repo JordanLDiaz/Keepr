@@ -113,7 +113,6 @@ export default {
 
       async removeVaultKeep(vaultKeepId) {
         try {
-          debugger
           const yes = await Pop.confirm('Are you sure you want to delete this keep from your vault?', 'This cannot be undone')
           if (!yes) {
             return
